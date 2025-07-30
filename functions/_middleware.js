@@ -5,18 +5,19 @@
  * @param {object} context The context object from Cloudflare.
  */
 export async function onRequest(context) {
-  const { request, next } = context;
+  const { request, next, env } = context;
   const url = new URL(request.url);
 
   // --- CONFIGURE YOUR SUBDOMAIN HERE ---
-  const downloadSubdomain = 'pgp.yourwebsite.com'; 
+  // Replace this with the actual subdomain you want to use for the download.
+  const downloadSubdomain = 'download.yourwebsite.com'; 
 
   // Check if the hostname of the incoming request matches your download subdomain.
   if (url.hostname === downloadSubdomain) {
-    // If it matches, internally fetch the result of the /download function
-    // and return it to the user. This makes visiting the subdomain
-    // trigger the download immediately.
-    return context.env.ASSETS.fetch(new URL('/download', request.url));
+    // If it matches, we call the /download function internally.
+    // The `fetch` command within a Worker will be routed to the correct function.
+    const downloadUrl = new URL('/download', request.url);
+    return fetch(downloadUrl.toString(), request);
   }
 
   // If it's not the download subdomain, continue to the requested page as normal.
