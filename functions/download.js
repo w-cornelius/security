@@ -2,7 +2,7 @@
 
 // Import the static file from your assets folder.
 // Make sure the path and filename match what you uploaded.
-import fileToDownload from '../assets/My-Awesome-File.zip';
+import fileToDownload from '../assets/dubc_io-email-pgp-pubkey.asc';
 
 export async function onRequest(context) {
   // Create a response from the imported file data.
@@ -12,7 +12,7 @@ export async function onRequest(context) {
   response.headers.set('Content-Type', 'application/octet-stream');
   response.headers.set(
     'Content-Disposition',
-    'attachment; filename="My-Awesome-File.zip"' // This is the name the user will see.
+    'attachment; filename="dubc_io-email-pgp-pubkey.asc"' // This is the name the user will see.
   );
 
   return response;
